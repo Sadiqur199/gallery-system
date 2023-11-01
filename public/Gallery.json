@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "img": "https://i.ibb.co/dfYDzLS/image-11.jpg",
+    "isFeatured": true
+  },
+  {
+    "id": 2,
+    "img": "https://i.ibb.co/qRXgJpr/image-10.jpg",
+    "isFeatured": false
+  },
+  {
+    "id": 3,
+    "img": "https://i.ibb.co/4YRRbsD/image-9.webp",
+    "isFeatured": false
+  },
+  {
+    "id": 4,
+    "img": "https://i.ibb.co/7bBwDbB/image-8.webp",
+    "isFeatured": false
+  },
+  {
+    "id": 5,
+    "img": "https://i.ibb.co/kBwZzNS/image-7.webp",
+    "isFeatured": false
+  },
+  {
+    "id": 6,
+    "img": "https://i.ibb.co/54nZ2rX/image-6.webp",
+    "isFeatured": false
+  },
+  {
+    "id": 7,
+    "img": "https://i.ibb.co/qYZWXmf/image-5.webp",
+    "isFeatured": false
+  },
+  {
+    "id": 8,
+    "img": "https://i.ibb.co/x8W596k/image-4.webp",
+    "isFeatured": false
+  },
+  {
+    "id": 9,
+    "img": "https://i.ibb.co/2kYCQ20/image-3.webp",
+    "isFeatured": false
+  },
+  {
+    "id": 10,
+    "img": "https://i.ibb.co/dmMwr3k/image-1.webp",
+    "isFeatured": false
+  }
+]
