@@ -1,64 +1,73 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './App.css'
 
 const App = () => {
-  const initialImages = [
-    {
-      id: 1,
-      img: "https://i.ibb.co/dfYDzLS/image-11.jpg",
-      isFeatured: true,
-    },
-    {
-      id: 2,
-      img: "https://i.ibb.co/qRXgJpr/image-10.jpg",
-      isFeatured: false,
-    },
-    {
-      id: 3,
-      img: "https://i.ibb.co/4YRRbsD/image-9.webp",
-      isFeatured: false,
-    },
-    {
-      id: 4,
-      img: "https://i.ibb.co/7bBwDbB/image-8.webp",
-      isFeatured: false,
-    },
-    {
-      id: 5,
-      img: "https://i.ibb.co/kBwZzNS/image-7.webp",
-      isFeatured: false,
-    },
-    {
-      id: 6,
-      img: "https://i.ibb.co/54nZ2rX/image-6.webp",
-      isFeatured: false,
-    },
-    {
-      id: 7,
-      img: "https://i.ibb.co/qYZWXmf/image-5.webp",
-      isFeatured: false,
-    },
-    {
-      id: 8,
-      img: "https://i.ibb.co/x8W596k/image-4.webp",
-      isFeatured: false,
-    },
-    {
-      id: 9,
-      img: "https://i.ibb.co/2kYCQ20/image-3.webp",
-      isFeatured: false,
-    },
-    {
-      id: 10,
-      img: "https://i.ibb.co/dmMwr3k/image-1.webp",
-      isFeatured: false,
-    },
-  ];
 
-  const [images, setImages] = useState(initialImages);
+
+
+  // const initialImages = [
+  //   {
+  //     id: 1,
+  //     img: "https://i.ibb.co/dfYDzLS/image-11.jpg",
+  //     isFeatured: true,
+  //   },
+  //   {
+  //     id: 2,
+  //     img: "https://i.ibb.co/qRXgJpr/image-10.jpg",
+  //     isFeatured: false,
+  //   },
+  //   {
+  //     id: 3,
+  //     img: "https://i.ibb.co/4YRRbsD/image-9.webp",
+  //     isFeatured: false,
+  //   },
+  //   {
+  //     id: 4,
+  //     img: "https://i.ibb.co/7bBwDbB/image-8.webp",
+  //     isFeatured: false,
+  //   },
+  //   {
+  //     id: 5,
+  //     img: "https://i.ibb.co/kBwZzNS/image-7.webp",
+  //     isFeatured: false,
+  //   },
+  //   {
+  //     id: 6,
+  //     img: "https://i.ibb.co/54nZ2rX/image-6.webp",
+  //     isFeatured: false,
+  //   },
+  //   {
+  //     id: 7,
+  //     img: "https://i.ibb.co/qYZWXmf/image-5.webp",
+  //     isFeatured: false,
+  //   },
+  //   {
+  //     id: 8,
+  //     img: "https://i.ibb.co/x8W596k/image-4.webp",
+  //     isFeatured: false,
+  //   },
+  //   {
+  //     id: 9,
+  //     img: "https://i.ibb.co/2kYCQ20/image-3.webp",
+  //     isFeatured: false,
+  //   },
+  //   {
+  //     id: 10,
+  //     img: "https://i.ibb.co/dmMwr3k/image-1.webp",
+  //     isFeatured: false,
+  //   },
+  // ];
+
+  const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]);
   const [draggedImage, setDraggedImage] = useState(null);
   const [newImages, setNewImages] = useState([]);
+
+  useEffect(()=>{
+    fetch('Gallery.json')
+    .then(res=>res.json())
+    .then(data=>setImages(data))
+  },[])
 
   const handleImageClick = (image) => {
     if (selectedImages.includes(image)) {
@@ -74,13 +83,19 @@ const App = () => {
 
   const handleDragOver = (image) => {
     if (draggedImage === null || draggedImage === image) return;
+  
     const imagesCopy = [...images];
     const draggedIndex = imagesCopy.findIndex((img) => img === draggedImage);
     const targetIndex = imagesCopy.findIndex((img) => img === image);
+  
     [imagesCopy[draggedIndex], imagesCopy[targetIndex]] = [
       imagesCopy[targetIndex],
       imagesCopy[draggedIndex],
     ];
+  
+    imagesCopy[draggedIndex].isFeatured = false;
+    imagesCopy[targetIndex].isFeatured = true;
+  
     setImages(imagesCopy);
     setDraggedImage(null);
   };
@@ -111,7 +126,7 @@ const App = () => {
   
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-gray-100">
       <div className="flex justify-between p-5">
         <div>
           {selectedImages.length > 0 ? (
@@ -145,12 +160,12 @@ const App = () => {
 
       <hr />
 
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap mt-5">
         {mergedImages.map((image,index) => (
           <div
             key={image.id}
-            className={`image-container m-5 h-[150px] rounded ${
-              image.isFeatured ? "lg:w-[450px]" : "lg:w-[292px]"
+            className={`image-container m-5 lg:h-[150px] rounded ${
+              image.isFeatured ? "lg:w-[400px] lg:h-[350px] sm:h-[300px]" : "lg:w-[292px] lg:h-[290px]"
             } ${
               selectedImages.includes(image)
                 ? "border border-red-500"
@@ -174,12 +189,12 @@ const App = () => {
                 filter: selectedImages.includes(image) ? 'blur(2px)' : 'none',
               }}
               className={`${
-                index === 0 ? 'h-[200px] w-[500px]' : 'h-[150px] w-[400px]'
+                index === 0 ? 'h-[350px] w-[500px]' : 'h-auto w-[400px]'
               } transition-transform transform hover:scale-105 hover:filter hover:brightness-90`}
             />
           </div>
         ))}
-        <div className="w-full md:w-1/3 px-4 mt-24 lg:w-1/4">
+        <div className="w-full md:w-1/3 px-4 lg:p-0 p-5 lg:mt-24 lg:w-1/4">
           <input
             type="file"
             accept="image/*"
