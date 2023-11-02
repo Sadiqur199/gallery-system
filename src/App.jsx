@@ -112,11 +112,17 @@ const App = () => {
 
   return (
     <div className="w-full">
-      <div className="flex justify-between">
+      <div className="flex justify-between p-5">
         <div>
           {selectedImages.length > 0 ? (
             <div className="w-full text-sm text-gray-600">
               {selectedImages.length}{" "}
+              <input
+              type="checkbox"
+              className="images-checkbox"
+              checked={selectedImages.includes()}
+              onChange={() => handleImageClick()}
+            />
               {selectedImages.length === 1 ? "image" : "images"} selected
             </div>
           ) : (
